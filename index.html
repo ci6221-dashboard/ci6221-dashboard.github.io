@@ -1,1 +1,479 @@
-Hello World!
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Singapore Election (Leading GRC)</title>
+
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/unicons.css">
+    <link rel="stylesheet" href="css/owl.carousel.min.css">
+    <link rel="stylesheet" href="css/owl.theme.default.min.css">
+
+    <!-- MAIN STYLE -->
+    <link rel="stylesheet" href="css/tooplate-style.css">
+    
+	<!-- Load d3.js -->
+	<script src="https://d3js.org/d3.v4.js"></script>
+	
+	<!-- To arrange the two charts in Elector Information part-->
+	<style>
+		.col-lg-left{float:left;}
+	</style>
+	
+	<!-- To zoom out for the Singapore Map -->
+	<style type="text/css">
+		.SingaporeMap{
+		width: 1200px;
+	    height: 700px;
+		}
+	    #security1{
+	        position: absolute;
+	        top: 10px;
+	        left: 10px;
+	        width: 5000px;
+	        height: 2200px;
+	    }
+	    /*Tim altered this part*/
+	    .centermap{
+	    transform: scale(0.46,0.46) translate(-300px,0px);
+	    /*position: absolute;*/
+	    float:left;
+	    }
+
+
+ 	</style>
+  </head>
+  <body>
+
+    <!-- MENU -->
+    <nav class="navbar navbar-expand-sm navbar-light">
+  
+        <div class="container" style="background-color:#FFFACD;">
+            <a class="navbar-brand" href="#introduction"><i class='uil uil-user'></i> DashBoard</a>
+
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item">
+                        <a href="#GE_GRC_map" class="nav-link"><span data-hover="GE GRC map">GE GRC map</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#Leader_of_GRC" class="nav-link"><span data-hover="Leader of GRC">Leader of GRC</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#Elector_Information" class="nav-link"><span data-hover="Elector Information">Elector Information</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="#GRC_Seats_Over_Elections" class="nav-link"><span data-hover="GRC Seats Over Elections">GRC Seats Over Elections</span></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="about full-screen d-lg-flex justify-content-center align-items-center" id="introduction">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-7 col-md-12 col-12 d-flex align-items-center">
+                    <div class="about-text">
+                        <small class="small-text">Welcome to <span class="mobile-block">The Singapore GE GRC analysis!</span></small>
+                        <h1 class="animated animated-text">
+                            <span class="mr-2">This dash-board is about</span>
+                                <div class="animated-info">
+                                    <span class="animated-item">Singapore</span>
+                                    <span class="animated-item">GE</span>
+                                    <span class="animated-item">GRC</span>
+                                </div>
+                        </h1>
+
+                        <p>Building a dash-board for XXXX.</p>
+                        
+                    </div>
+                </div>
+
+                <div class="col-lg-5 col-md-12 col-12">
+                    <div class="about-image svg">
+                        <img src="https://cna-sg-res.cloudinary.com/image/upload/q_auto,f_auto/image/12862714/16x9/991/557/a4d3ed0eafcee1a860b079a38672e8d3/pg/sg-votes-2020-default-photo.jpg" class="img-fluid" alt="svg image">
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+	
+	<!-- GE GRC map  Timothy's part-->
+    <section class="project py-5" id="GE_GRC_map">
+      <div class="container">
+        <div class="row">
+        <div class="SingaporeMap">
+	        <div class="centermap" >
+	        	<iframe id="security1" frameborder="0" src="SingaporeMap.html" ></iframe>
+			</div>
+		</div>
+        
+       </div>
+     </div>
+    </section>
+
+	
+	
+	<!-- Leader of GRC Robin's part -->
+    <section class="project py-5" id="Leader_of_GRC">
+      <div class="container">
+        <div class="row">
+        <div> To be filled for Robin's part</div>
+        
+       </div>
+     </div>
+    </section>
+
+
+    <!-- Elector Information Wenting's part-->
+    <section class="resume py-5 d-lg-flex justify-content-center align-items-center" id="Elector_Information">
+       <div class="container">
+                <div class="row">
+                  <div class="col-lg-left">
+					<div class="col-lg-8 mx-auto">
+                        <h2 class="col-lg-11 text-center mx-auto col-12">Election Result</h2>
+                    </div>
+                    <div>
+	                    <!-- Add buttons -->
+						<button onclick="update1(data1)">2011</button>
+						<button onclick="update1(data2)">2015</button>
+						<button onclick="update1(data3)">2020</button>
+						
+						<!-- Create a div where the graph will take place -->
+						<div id="my_dataviz2"></div>
+						<script>
+						
+						// create data_set
+						var data1 = [
+						   {group: "Aljunied", value: 45.28},
+						   {group: "Ang Mo Kio", value: 69.33},
+						   {group: "Bishan Toa Payoh", value: 56.93},
+						   {group: "Chua Chu Kang", value: 61.2},
+						   {group: "East Coast", value: 54.83},
+						   {group: "Holland Bukit Timah", value: 60.08},
+						   {group: "Jurong", value: 66.96},
+						   {group: "Marine Parade", value: 56.64},
+						   {group: "Moulmein Kallang", value: 58.55},
+						   {group: "Nee Soon", value: 58.4},
+						   {group: "Pasir Ris Punggol", value: 64.79},
+						   {group: "Sembawang", value: 	63.9},
+						   {group: "Tampines", value: 57.22},
+						   {group: "Tanjong Pagar", value: 100},
+						   {group: "West Coast", value: 66.57}
+						];
+						
+						var data2 = [
+						   {group: "Aljunied", value: 49.04},
+						   {group: "Ang Mo Kio", value: 78.64},
+						   {group: "Bishan Toa Payoh", value: 73.59},
+						   {group: "Chua Chu Kang", value: 76.91},
+						   {group: "East Coast", value: 60.73},
+						   {group: "Holland Bukit Timah", value: 66.6},
+						   {group: "Jalan Besar", value: 67.75},
+						   {group: "Jurong", value:	79.29},
+						   {group: "Marine Parade", value: 64.07},
+						   {group: "Marsiling Yew Tee", value: 68.73},
+						   {group: "Nee Soon", value: 66.83},
+						   {group: "Pasir Ris Punggol", value: 72.89},
+						   {group: "Sembawang", value: 72.28},
+						   {group: "Tampines", value:	72.07},
+						   {group: "Tanjong Pagar", value: 77.71},
+						   {group: "West Coast", value:	78.57}
+						];
+						
+						var data3 = [
+							   {group: "Aljunied", value: 40},
+							   {group: "Ang Mo Kio", value: 72},
+							   {group: "Bishan Toa Payoh", value: 67},
+							   {group: "Choa Chu Kang", value: 59},
+							   {group: "East Coast", value: 54},
+							   {group: "Holland Bukit Timah", value: 68},
+							   {group: "Jalan Besar", value: 67},
+							   {group: "Jurong", value:	75},
+							   {group: "Marine Parade", value: 57},
+							   {group: "Marsiling Yew Tee", value: 64},
+							   {group: "Nee Soon", value: 61},
+							   {group: "Pasir Ris Punggol", value: 63},
+							   {group: "Sembawang", value: 69},
+							   {group: "Tampines", value:	67},
+							   {group: "Tanjong Pagar", value: 63},
+							   {group: "West Coast", value:	52}
+							];
+
+						// set the dimensions and margins of the graph
+						var margin = {top: 30, right: 30, bottom: 70, left: 60},
+						    width = 460 - margin.left - margin.right,
+						    height = 400 - margin.top - margin.bottom;
+
+						// append the svg object to the body of the page
+						var svg2 = d3.select("#my_dataviz2")
+						  .append("svg")
+						    .attr("width", width + margin.left + margin.right)
+						    .attr("height", height + margin.top + margin.bottom)
+						  .append("g")
+						    .attr("transform",
+						          "translate(" + margin.left + "," + margin.top + ")");
+
+						// Initialize the X axis
+						var x2 = d3.scaleBand()
+						  .range([ 0, width ])
+						  .padding(0.2);
+						var xAxis2 = svg2.append("g")
+						  .attr("transform", "translate(0," + height + ")")
+						  
+
+						// Initialize the Y axis
+						var y2 = d3.scaleLinear()
+						  .range([ height, 0]);
+						var yAxis2 = svg2.append("g")
+						  .attr("class", "myYaxis")
+
+
+						// A function that create / update the plot for a given variable:
+						function update(data) {
+
+						  // Update the X axis
+						  x2.domain(data.map(function(d) { return d.group; }))
+						  xAxis2.call(d3.axisBottom(x2))
+						  .selectAll("text")
+							  .attr("transform", "translate(-10,0)rotate(-25)")
+							  .style("text-anchor", "end");
+						  //Add X axis label
+						  svg2.append("text")             
+						  .attr("transform",
+						        "translate(" + (width/2) + " ," + 
+						                       (height + margin.top + 38) + ")")
+						  .style("text-anchor", "middle")
+						  .text("GRCs");
+
+						  // Update the Y axis
+						  y2.domain([0, 100]);
+						  yAxis2.transition().duration(1000).call(d3.axisLeft(y2));
+						  //Add Y axis label
+						  svg2.append("text")
+						  .attr("transform", "rotate(-90)")
+						  .attr("y", 0 - margin.left+10)
+						  .attr("x",0 - (height / 2))
+						  .attr("dy", "1em")
+						  .style("text-anchor", "middle")
+						  .text("PAP Voting % Result"); 
+
+						  // Create the u variable
+						  var u2 = svg2.selectAll("rect")
+						    .data(data)
+
+						  u2
+						    .enter()
+						    .append("rect") // Add a new rect for each new elements
+						    .merge(u2) // get the already existing elements as well
+						    .transition() // and apply changes to all of them
+						    .duration(1000)
+						      .attr("x", function(d) { return x2(d.group); })
+						      .attr("y", function(d) { return y2(d.value); })
+						      .attr("width", x2.bandwidth())
+						      .attr("height", function(d) { return height - y2(d.value); })
+						      .attr("fill", "#69b3a2")
+
+						  // If less group in the new dataset, I delete the ones not in use anymore
+						  u2
+						    .exit()
+						    .remove()
+						}
+
+						// Initialize the plot with the first dataset
+						update(data1)
+
+						</script>
+                    </div>
+                  </div>
+                  
+                  <div  class="col-lg-left">
+                  	<div class="col-lg-8 mx-auto">
+                        <h2 class="col-lg-11 text-center mx-auto col-12">Electors Information</h2>
+                      </div>
+
+							<!-- Initialize a select button -->
+							<select id="selectButton"></select>
+							
+							<!-- Create a div where the graph will take place -->
+							<div id="my_dataviz1"></div>   
+							<script>
+							// set the dimensions and margins of the graph
+							var margin = {top: 30, right: 30, bottom: 70, left: 60},
+							    width = 460 - margin.left - margin.right,
+							    height = 400 - margin.top - margin.bottom;
+							
+							// append the svg object to the body of the page
+							var svg = d3.select("#my_dataviz1")
+							  .append("svg")
+							    .attr("width", width + margin.left + margin.right)
+							    .attr("height", height + margin.top + margin.bottom)
+							  .append("g")
+							    .attr("transform",
+							          "translate(" + margin.left + "," + margin.top + ")");
+							
+							// Initialize the X axis
+							var x = d3.scaleBand()
+							  .range([ 0, width ])
+							  .padding(1);
+							var xAxis = svg.append("g")
+							  .attr("transform", "translate(0," + height + ")")
+							
+							// Initialize the Y axis
+							var y = d3.scaleLinear()
+							  .range([ height, 0]);
+							var yAxis = svg.append("g")
+							  .attr("class", "myYaxis")
+							
+							// List of groups (here I have one group per column)
+							var allGroup = ["electors_2015", "electors_2020"]
+							
+						  // add the options to the button
+						  d3.select("#selectButton")
+						    .selectAll('myOptions')
+						   	.data(allGroup)
+						    .enter()
+						  	.append('option')
+						    .text(function (d) { return d; }) // text showed in the menu
+						    .attr("value", function (d) { return d; }) // corresponding value returned by the button
+						
+							  
+							// A function that create / update the plot for a given variable:
+							function update(selectedVar) {
+							
+							  // Parse the Data
+							  d3.csv("GRCelectors1.csv", function(data) {
+							
+								
+								  
+							    // X axis
+							    x.domain(data.map(function(d) { return d.area; }))
+							    xAxis.transition().duration(1000).call(d3.axisBottom(x))
+							    .selectAll("text")
+								  .attr("transform", "translate(-10,0)rotate(-25)")
+								  .style("text-anchor", "end");
+							
+							  //Add X axis label
+							    svg.append("text")             
+							    .attr("transform",
+							          "translate(" + (width/2) + " ," + 
+							                         (height + margin.top + 38) + ")")
+							    .style("text-anchor", "middle")
+							    .text("GRCs");
+							    
+							    // Add Y axis
+							    y.domain([0, d3.max(data, function(d) { return +d[selectedVar] }) ]);
+							    yAxis.transition().duration(1000).call(d3.axisLeft(y));
+
+							  	//Add Y axis label
+							    svg.append("text")
+							    .attr("transform", "rotate(-90)")
+							    .attr("y", 0 - margin.left-5)
+							    .attr("x",0 - (height / 2))
+							    .attr("dy", "1em")
+							    .style("text-anchor", "middle")
+							    .text("Electors Number"); 
+							  	
+							    // variable u: map data to existing circle
+							    var j = svg.selectAll(".myLine")
+							      .data(data)
+							    // update lines
+							    j
+							      .enter()
+							      .append("line")
+							      .attr("class", "myLine")
+							      .merge(j)
+							      .transition()
+							      .duration(1000)
+							        .attr("x1", function(d) { console.log(x(d.area)) ; return x(d.area); })
+							        .attr("x2", function(d) { return x(d.area); })
+							        .attr("y1", y(0))
+							        .attr("y2", function(d) { return y(d[selectedVar]); })
+							        .attr("stroke", "grey")
+							
+							
+							    // variable u: map data to existing circle
+							    var u = svg.selectAll("circle")
+							      .data(data)
+							    // update bars
+							    u
+							      .enter()
+							      .append("circle")
+							      .merge(u)
+							      .transition()
+							      .duration(1000)
+							        .attr("cx", function(d) { return x(d.area); })
+							        .attr("cy", function(d) { return y(d[selectedVar]); })
+							        .attr("r", 8)
+							        .attr("fill", "#69b3a2");
+							
+							
+							  })
+							
+							}
+							
+							// Initialize plot
+							update('electors_2015')
+							
+							//When the button is changed, run the updateChart function
+							d3.select("#selectButton").on("change", function(d) {
+							    // recover the option that has been chosen
+							    var selectedOption = d3.select(this).property("value")
+							    // run the updateChart function with this selected option
+							    update(selectedOption)
+							})
+							
+							</script>    
+                  </div>
+                </div>
+        </div>
+    </section>
+
+    <!-- GRC Seats Over Elections Junyi's part-->
+    <section class="contact py-5" id="GRC_Seats_Over_Elections">
+      <div class="container">
+        <div class="row">
+          <iframe src="PAP_election_Dynamic_BAR_v3.html" frameborder="0" width="970" scrolling="No" height="610" leftmargin="0" topmargin="0"></iframe>
+        </div>
+      </div>
+    </section>
+
+    <!-- FOOTER -->
+     <footer class="footer py-5">
+          <div class="container">
+               <div class="row">
+
+                    <div class="col-lg-12 col-12">                                
+                        <p class="copyright-text text-center">CI6221 Information Visualization Group Project 1</p>
+                        <p class="copyright-text text-center">Designed by <a rel="nofollow">Haung Qifan, Loh Zi BIn Robin, Qin WEnting, Xiong Junyi</a></p>
+                    </div>
+                    
+               </div>
+          </div>
+     </footer>
+
+    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/Headroom.js"></script>
+    <script src="js/jQuery.headroom.js"></script>
+    <script src="js/owl.carousel.min.js"></script>
+    <script src="js/smoothscroll.js"></script>
+    <script src="js/custom.js"></script>
+
+  </body>
+</html>
