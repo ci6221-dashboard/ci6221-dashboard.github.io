@@ -67,7 +67,8 @@
     <script>
         var svg3 = d3.select("#my_dataviz3").append("svg")
             .attr("width", 960)
-            .attr("height", 600);
+            .attr("height", 600)
+            .call(responsive);
 
         var tickDuration = 1000;
         var top_n = 4;
@@ -302,6 +303,25 @@
                 .style('stroke-linejoin', 'round')
                 .style('opacity', 1);
 
+        }
+
+        function responsive(svg) {
+            let container = d3.select(svg.node().parentNode),
+                width = parseInt(svg.style("width")),
+                height = parseInt(svg.style("height")),
+                aspect = width / height;
+
+            svg.attr("viewBox", "0 0 " + width + " " + height)
+                .attr("perserveAspectRatio", "xMinYMid")
+                .call(resize);
+
+            d3.select(window).on("resize." + container.attr("id"), resize);
+
+            function resize() {
+                let targetWidth = parseInt(container.style("width"));
+                svg.attr("width", targetWidth);
+                svg.attr("height", Math.round(targetWidth / aspect));
+            }
         }
     </script>
 </body>
