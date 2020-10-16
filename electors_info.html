@@ -30,6 +30,7 @@
                 .append("svg")
                 .attr("width", width + margin.left + margin.right)
                 .attr("height", height + margin.top + margin.bottom)
+                .call(responsive)
                 .append("g")
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
@@ -69,8 +70,6 @@
 
                 // Parse the Data
                 d3.csv("GRCelectors1.csv", function(data) {
-
-
 
                     // X axis
                     x.domain(data.map(function(d) {
@@ -163,6 +162,25 @@
                     // run the updateChart function with this selected option
                 update(selectedOption)
             })
+
+            function responsive(svg) {
+                let container = d3.select(svg.node().parentNode),
+                    width = parseInt(svg.style("width")),
+                    height = parseInt(svg.style("height")),
+                    aspect = width / height;
+
+                svg.attr("viewBox", "0 0 " + width + " " + height)
+                    .attr("perserveAspectRatio", "xMinYMid")
+                    .call(resize);
+
+                d3.select(window).on("resize." + container.attr("id"), resize);
+
+                function resize() {
+                    let targetWidth = parseInt(container.style("width"));
+                    svg.attr("width", targetWidth);
+                    svg.attr("height", Math.round(targetWidth / aspect));
+                }
+            }
         </script>
 
     </div>
