@@ -68,8 +68,8 @@ body {
     padding: 0;
     width: 12%;
     background-color: pink;
-    position: fixed;
-    height: 100%;
+    float: left;
+    height: 100vh;
     overflow: auto;
 }
 
@@ -79,7 +79,7 @@ body {
 .sidebar h1 {
     display: block;
     color: black;
-    padding: 14px 14px 0px 14px;
+    padding: 7px 14px 0px 14px;
     font-weight: bold;
     font-size: large;
     text-decoration: none;
