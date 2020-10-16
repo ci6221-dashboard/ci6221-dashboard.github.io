@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="utf-8">
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <style>
+        text {
+            font-size: 16px;
+            font-family: Open Sans, sans-serif;
+        }
+        
+        text.title {
+            font-size: 30px;
+            font-weight: 900;
+        }
+        
+        text.subTitle {
+            font-weight: 500;
+            fill: #777777;
+        }
+        
+        text.caption {
+            font-weight: 400;
+            font-size: 14px;
+            fill: #777777;
+        }
+        
+        text.label {
+            font-weight: 600;
+        }
+        
+        text.valueLabel {
+            font-weight: 300;
+        }
+        
+        text.yearText {
+            font-size: 64px;
+            font-weight: 700;
+            opacity: 0.25;
+        }
+        
+        .tick text {
+            fill: #777777;
+        }
+        
+        .xAxis .tick:nth-child(2) text {
+            text-anchor: start;
+        }
+        
+        .tick line {
+            shape-rendering: CrispEdges;
+            stroke: #dddddd;
+        }
+        
+        .tick line.origin {
+            stroke: #aaaaaa;
+        }
+        
+        path.domain {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="my_dataviz3"></div>
+    <script>
+        var svg3 = d3.select("#my_dataviz3").append("svg")
+            .attr("width", 960)
+            .attr("height", 600);
+
+        var tickDuration = 1000;
+        var top_n = 4;
+        var height1 = 600;
+        var width1 = 960;
+
+        const margin1 = {
+            top: 80,
+            right: 0,
+            bottom: 5,
+            left: 0
+        };
+
+        let barPadding = (height1 - (margin1.bottom + margin1.top)) / (top_n * 3);
+
+        // variable declared with let is limted to block it is declared
+        // variable declared with var has global scope
+        let title = svg3.append('text')
+            .attr('class', 'title')
+            .attr('y', 24)
+            .text("General Election result summary for PAP 1988-2020");
+
+
+        let caption = svg3.append('text')
+            .attr('class', 'caption')
+            .attr('x', width1)
+            .attr('y', height1 - 5)
+            .style('text-anchor', 'end')
+            .html('Source: eld.gov.sg');
+
+        let year = 1988;
+        let election_years = [1988, 1991, 1997, 2001, 2006, 2011, 2015, 2020];
+
+        d3.csv('PAP_election_summary_1988to2020_v3.csv').then(function(data) {
+            data.forEach(d => {
+                d.value = +d.value,
+                    d.lastValue = +d.lastValue,
+                    d.value = isNaN(d.value) ? 0 : d.value,
+                    d.year = +d.year,
+                    d.colour = d3.hsl(Math.random() * 360, 0.75, 0.75)
+            });
+            console.log(data);
+
+            let yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
+                // .sort((a,b) => b.value - a.value)
+                .slice(0, top_n);
+
+            yearSlice.forEach((d, i) => d.position = i);
+
+            console.log('yearSlice: ', yearSlice)
+
+            let x3 = d3.scaleLinear()
+                // .domain([0, d3.max(yearSlice, d => d.value)])
+                .domain([0, 100])
+                .range([margin1.left, width1 - margin1.right - 65]);
+
+            let y3 = d3.scaleLinear()
+                .domain([top_n, 0])
+                .range([height1 - margin1.bottom, margin1.top]);
+
+            let xAxis3 = d3.axisTop()
+                .scale(x3)
+                .ticks(width1 > 500 ? 5 : 2)
+                .tickSize(-(height1 - margin1.top - margin1.bottom))
+                .tickFormat(d => d3.format(',')(d));
+
+            svg3.append('g')
+                .attr('class', 'axis xAxis')
+                .attr('transform', `translate(0, ${margin1.top})`)
+                .call(xAxis3)
+                .selectAll('.tick line')
+                .classed('origin', d => d == 0);
+
+            svg3.selectAll('rect.bar')
+                .data(yearSlice, d => d.Data_field)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar')
+                .attr('x', x3(0) + 1)
+                .attr('width', d => x3(d.value) - x3(0) - 1)
+                .attr('y', d => y3(d.position) + 15)
+                .attr('height', y3(1) - y3(0) - barPadding)
+                .style('fill', d => d.colour);
+
+            svg3.selectAll('text.label')
+                .data(yearSlice, d => d.Data_field)
+                .enter()
+                .append('text')
+                .attr('class', 'label')
+                .attr('x', d => x3(d.value) - 8)
+                .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1)
+                .style('text-anchor', 'end')
+                .html(d => d.Data_field);
+
+            svg3.selectAll('text.valueLabel')
+                .data(yearSlice, d => d.Data_field)
+                .enter()
+                .append('text')
+                .attr('class', 'valueLabel')
+                .attr('x', d => x3(d.value) + 5)
+                .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1)
+                .text(d => d3.format(',.0f')(d.lastValue));
+
+            let yearText = svg3.append('text')
+                .attr('class', 'yearText')
+                .attr('x', width1 - margin1.right)
+                .attr('y', height1 - 25)
+                .style('text-anchor', 'end')
+                .html(~~year);
+            // .call(halo, 10);
+
+
+            let ticker = d3.interval(e => { // e -> custom event object
+
+                yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
+                    // .sort((a,b) => b.value - a.value)
+                    .slice(0, top_n);
+
+                yearSlice.forEach((d, i) => d.position = i);
+                //console.log('IntervalYear: ', yearSlice);
+
+                // x.domain([0, d3.max(yearSlice, d => d.value)]); 
+                x3.domain([0, 100]);
+
+                svg3.select('.xAxis')
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .call(xAxis3);
+
+                let bars = svg3.selectAll('.bar').data(yearSlice, d => d.Data_field);
+                bars
+                    .enter()
+                    .append('rect')
+                    .attr('class', d => `bar ${d.Data_field.replace(/\s/g,'_')}`)
+                    .attr('x', x3(0) + 1)
+                    .attr('width', d => x3(d.value) - x3(0) - 1)
+                    .attr('y', d => y3(top_n + 1) + 15)
+                    .attr('height', y3(1) - y3(0) - barPadding)
+                    .style('fill', d => d.colour)
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('y', d => y3(d.position) + 5);
+                bars
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('width', d => x3(d.value) - x3(0) - 1)
+                    .attr('y', d => y3(d.position) + 15);
+
+
+                let labels = svg3.selectAll('.label')
+                    .data(yearSlice, d => d.Data_field);
+                labels
+                    .enter()
+                    .append('text')
+                    .attr('class', 'label')
+                    .attr('x', d => x3(d.value) - 8)
+                    .attr('y', d => y3(top_n + 1) + 5 + ((y3(1) - y3(0)) / 2))
+                    .style('text-anchor', 'end')
+                    .html(d => d.Data_field)
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
+                labels
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('x', d => x3(d.value) - 8)
+                    .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
+
+                let valueLabels = svg3.selectAll('.valueLabel').data(yearSlice, d => d.Data_field);
+                valueLabels
+                    .enter()
+                    .append('text')
+                    .attr('class', 'valueLabel')
+                    .attr('x', d => x3(d.value) + 5)
+                    .attr('y', d => y3(top_n + 1) + 5)
+                    .text(d => d3.format(',.0f')(d.lastValue))
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
+                valueLabels
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('x', d => x3(d.value) + 5)
+                    .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1)
+                    .tween("text", function(d) {
+                        let i = d3.interpolateRound(d.lastValue, d.value);
+                        return function(t) {
+                            this.textContent = d3.format(',')(i(t));
+                        };
+                    });
+                valueLabels
+                    .exit()
+                    .transition()
+                    .duration(tickDuration)
+                    .ease(d3.easeLinear)
+                    .attr('x', d => x3(d.value) + 5)
+                    .attr('y', d => y3(top_n + 1) + 5)
+                    .remove();
+
+                yearText.html(~~year); //~~ convert to int (remove decimals)      
+                // yearText
+
+                if (year == 1988 || year == 1991 || year == 1997 || year == 2001 || year == 2006 || year == 2011 || year == 2015 || year == 2020) yearText.style('fill', '#E81616');
+                // if(election_years.includes(year)) {yearText.style('fill', '#E81616')}
+                else {
+                    yearText.style('fill', '#CCCCCC')
+                };
+                // if(year == 1989) yearText.style('fill', '#CCCCCC');
+                // if(year == 1991) yearText.style('fill', '#E81616');
+                if (year == 2020) year = 1987;
+                //Iterate the election between 1988 to 2020
+                year = d3.format('.1f')((+year) + 1);
+            }, tickDuration);
+
+        });
+
+        // Format for yearText
+        const halo = function(text, year, strokeWidth) {
+            text.select(function() {
+                    return this.parentNode.insertBefore(this.cloneNode(true), this);
+                })
+                // .style('fill', '#ffffff')
+                .style('stroke', '#ffffff')
+                .style('stroke-width', strokeWidth)
+                .style('stroke-linejoin', 'round')
+                .style('opacity', 1);
+
+        }
+    </script>
+</body>
