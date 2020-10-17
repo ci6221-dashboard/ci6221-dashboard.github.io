@@ -29,10 +29,17 @@ body {
     float: right;
 }
 
+iframe:focus {
+    outline: none;
+}
+
+iframe[seamless] {
+    display: block;
+}
+
 @media screen and (max-width: 1350px) {
     .navbar a,
-    .navbar-right,
-    iframe {
+    .navbar-right {
         width: 100%;
         display: block;
     }
