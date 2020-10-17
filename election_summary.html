@@ -4,9 +4,12 @@
     <meta charset="utf-8">
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <style>
+        body {
+            font-family: Open Sans, sans-serif;
+        }
+        
         text {
             font-size: 16px;
-            font-family: Open Sans, sans-serif;
         }
         
         text.title {
@@ -63,8 +66,9 @@
 </head>
 
 <body>
-    
-    <div style="font-size:16px;font-weight:bold;">&emsp;&emsp;PAP Election Result Summary (1988-2020)</div>
+
+    <p style="font-size:18px;font-weight:bold;text-align:center;">PAP Election Results Summary (1988-2020)</p>
+    <hr />
     <div id="my_dataviz3"></div>
     <script>
         var svg3 = d3.select("#my_dataviz3").append("svg")

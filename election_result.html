@@ -6,12 +6,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- Load d3.js -->
     <script src="https://d3js.org/d3.v4.js"></script>
+    <style>
+        body {
+            font-family: Open Sans, sans-serif;
+        }
+    </style>
 </head>
 
 <body>
     <div>
-    	<div style="font-size:16px;font-weight:bold;">&emsp;&emsp;&emsp;PAP GRC Voting Result</div>
-    	<div style="font-size:6px;">&emsp;&emsp;</div>
+        <p style="font-size:18px;font-weight:bold;text-align: center;">PAP GRC Voting Results</p>
+        <hr />
         <!-- Add buttons -->
         <button onclick="update1(data1)">2011</button>
         <button onclick="update1(data2)">2015</button>
@@ -187,13 +192,6 @@
                 .append("g")
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
-            
-           // svg2.append("text")
-	            //.attr("x", (width / 2))             
-	            //.attr("y", 0 - (margin.top / 2))
-	            //.attr("text-anchor", "middle")  
-	            //.style("font-size", "16px") 
-	           // .text("PAP GRC Voting Result");
 
             // Initialize the X axis
             var x2 = d3.scaleBand()
