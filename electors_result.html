@@ -30,7 +30,7 @@
                     left: 60
                 },
                 width = 460 - margin.left - margin.right,
-                height = 400 - margin.top - margin.bottom;
+                height = 300 - margin.top - margin.bottom;
 
             // append the svg object to the body of the page
             var svg = d3.select("#my_dataviz1")
@@ -56,7 +56,7 @@
                 .attr("class", "myYaxis")
 
             // List of groups (here I have one group per column)
-            var allGroup = ["electors_2015", "electors_2020"]
+            var allGroup = ["Electors in 2015", "Electors in 2020"]
 
             // add the options to the button
             d3.select("#selectButton")
@@ -166,7 +166,7 @@
             }
 
             // Initialize plot
-            update('electors_2015')
+            update('Electors in 2015')
 
             //When the button is changed, run the updateChart function
             d3.select("#selectButton").on("change", function(d) {
