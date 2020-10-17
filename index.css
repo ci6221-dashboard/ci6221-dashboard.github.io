@@ -39,7 +39,8 @@ iframe[seamless] {
 
 @media screen and (max-width: 1350px) {
     .navbar a,
-    .navbar-right {
+    .navbar-right,
+    iframe {
         width: 100%;
         display: block;
     }
