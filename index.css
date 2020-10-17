@@ -30,11 +30,9 @@ body {
 }
 
 @media screen and (max-width: 1350px) {
-    .navbar a {
-        width: 100%;
-        display: block;
-    }
-    .navbar-right {
+    .navbar a,
+    .navbar-right,
+    iframe {
         width: 100%;
         display: block;
     }
