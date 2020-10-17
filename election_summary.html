@@ -9,7 +9,7 @@
         }
         
         text {
-            font-size: 16px;
+            font-size: 1.5em;
         }
         
         text.title {
@@ -37,9 +37,9 @@
         }
         
         text.yearText {
-            font-size: 64px;
+            font-size: 6em;
             font-weight: 700;
-            opacity: 0.25;
+            opacity: 0.5;
         }
         
         .tick text {
@@ -67,8 +67,8 @@
 
 <body>
 
-    <p style="font-size:18px;font-weight:bold;text-align:center;">PAP Election Results Summary (1988-2020)</p>
-    <hr />
+    <p style="margin:0;font-size:1.3em;font-weight:bold;text-align:center;color:crimson;">PAP Election Results Summary (1988-2020)</p>
+    <hr style="border:1px solid crimson;" />
     <div id="my_dataviz3"></div>
     <script>
         var svg3 = d3.select("#my_dataviz3").append("svg")
@@ -122,7 +122,6 @@
             console.log('yearSlice: ', yearSlice)
 
             let x3 = d3.scaleLinear()
-                // .domain([0, d3.max(yearSlice, d => d.value)])
                 .domain([0, 100])
                 .range([margin1.left, width1 - margin1.right - 65]);
 
@@ -179,8 +178,6 @@
                 .attr('y', height1 - 25)
                 .style('text-anchor', 'end')
                 .html(~~year);
-            // .call(halo, 10);
-
 
             let ticker = d3.interval(e => { // e -> custom event object
 

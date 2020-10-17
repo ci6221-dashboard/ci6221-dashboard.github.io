@@ -12,8 +12,8 @@
 </head>
 
 <body>
-    <p style="font-size:18px;font-weight:bold;text-align:center;">Electors' Information</p>
-    <hr />
+    <p style="margin:0;font-size:1.3em;font-weight:bold;text-align:center;color:crimson;">Electors' Information</p>
+    <hr style="border:1px solid crimson;" />
     <div>
 
         <!-- Initialize a select button -->
@@ -93,6 +93,9 @@
                             "translate(" + (width / 2) + " ," +
                             (height + margin.top + 38) + ")")
                         .style("text-anchor", "middle")
+                        .style("font-weight", "bold")
+                        .style("font-size", "0.8em")
+                        .style("fill", "lightcoral")
                         .text("GRCs");
 
                     // Add Y axis
@@ -108,6 +111,9 @@
                         .attr("x", 0 - (height / 2))
                         .attr("dy", "1em")
                         .style("text-anchor", "middle")
+                        .style("font-weight", "bold")
+                        .style("font-size", "0.8em")
+                        .style("fill", "lightcoral")
                         .text("Electors Number");
 
                     // variable u: map data to existing circle

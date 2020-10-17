@@ -15,8 +15,8 @@
 
 <body>
     <div>
-        <p style="font-size:18px;font-weight:bold;text-align: center;">PAP GRC Voting Results</p>
-        <hr />
+        <p style="margin:0;font-size:1.3em;font-weight:bold;text-align:center;color:crimson;">PAP GRC Voting Results</p>
+        <hr style="border:1px solid crimson;" />
         <!-- Add buttons -->
         <button onclick="update1(data1)">2011</button>
         <button onclick="update1(data2)">2015</button>
@@ -235,16 +235,21 @@
                 x2.domain(data.map(function(d) {
                     return d.group;
                 }))
+
                 xAxis2.call(d3.axisBottom(x2))
                     .selectAll("text")
                     .attr("transform", "translate(-10,0)rotate(-25)")
                     .style("text-anchor", "end");
+
                 //Add X axis label
                 svg2.append("text")
                     .attr("transform",
                         "translate(" + (width / 2) + " ," +
-                        (height + margin.top + 55) + ")")
+                        (height + margin.top + 59) + ")")
                     .style("text-anchor", "middle")
+                    .style("font-weight", "bold")
+                    .style("font-size", "0.8em")
+                    .style("fill", "lightcoral")
                     .text("GRCs");
 
                 // Update the Y axis
@@ -257,6 +262,9 @@
                     .attr("x", 0 - (height / 2))
                     .attr("dy", "1em")
                     .style("text-anchor", "middle")
+                    .style("font-weight", "bold")
+                    .style("font-size", "0.8em")
+                    .style("fill", "lightcoral")
                     .text("PAP Voting % Result");
 
                 // Create the u variable
