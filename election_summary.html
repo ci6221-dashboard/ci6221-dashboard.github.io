@@ -63,6 +63,8 @@
 </head>
 
 <body>
+    
+    <div style="font-size:16px;font-weight:bold;">&emsp;&emsp;PAP Election Result Summary (1988-2020)</div>
     <div id="my_dataviz3"></div>
     <script>
         var svg3 = d3.select("#my_dataviz3").append("svg")
@@ -86,11 +88,6 @@
 
         // variable declared with let is limted to block it is declared
         // variable declared with var has global scope
-        let title = svg3.append('text')
-            .attr('class', 'title')
-            .attr('y', 24)
-            .text("PAP's Election Result summary from 1988-2020");
-
 
         let caption = svg3.append('text')
             .attr('class', 'caption')

@@ -10,6 +10,8 @@
 
 <body>
     <div>
+    	<div style="font-size:16px;font-weight:bold;">&emsp;&emsp;&emsp;PAP GRC Voting Result</div>
+    	<div style="font-size:6px;">&emsp;&emsp;</div>
         <!-- Add buttons -->
         <button onclick="update1(data1)">2011</button>
         <button onclick="update1(data2)">2015</button>
@@ -168,7 +170,7 @@
 
             // set the dimensions and margins of the graph
             var margin = {
-                    top: 30,
+                    top: 10,
                     right: 30,
                     bottom: 70,
                     left: 60
@@ -185,6 +187,13 @@
                 .append("g")
                 .attr("transform",
                     "translate(" + margin.left + "," + margin.top + ")");
+            
+           // svg2.append("text")
+	            //.attr("x", (width / 2))             
+	            //.attr("y", 0 - (margin.top / 2))
+	            //.attr("text-anchor", "middle")  
+	            //.style("font-size", "16px") 
+	           // .text("PAP GRC Voting Result");
 
             // Initialize the X axis
             var x2 = d3.scaleBand()
@@ -236,7 +245,7 @@
                 svg2.append("text")
                     .attr("transform",
                         "translate(" + (width / 2) + " ," +
-                        (height + margin.top + 38) + ")")
+                        (height + margin.top + 55) + ")")
                     .style("text-anchor", "middle")
                     .text("GRCs");
 
