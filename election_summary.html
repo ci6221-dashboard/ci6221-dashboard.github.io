@@ -182,13 +182,10 @@
             let ticker = d3.interval(e => { // e -> custom event object
 
                 yearSlice = data.filter(d => d.year == year && !isNaN(d.value))
-                    // .sort((a,b) => b.value - a.value)
                     .slice(0, top_n);
 
                 yearSlice.forEach((d, i) => d.position = i);
-                //console.log('IntervalYear: ', yearSlice);
 
-                // x.domain([0, d3.max(yearSlice, d => d.value)]); 
                 x3.domain([0, 100]);
 
                 svg3.select('.xAxis')
@@ -218,9 +215,9 @@
                     .attr('width', d => x3(d.value) - x3(0) - 1)
                     .attr('y', d => y3(d.position) + 15);
 
-
                 let labels = svg3.selectAll('.label')
                     .data(yearSlice, d => d.Data_field);
+
                 labels
                     .enter()
                     .append('text')
@@ -233,6 +230,7 @@
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
+
                 labels
                     .transition()
                     .duration(tickDuration)
@@ -241,6 +239,7 @@
                     .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
 
                 let valueLabels = svg3.selectAll('.valueLabel').data(yearSlice, d => d.Data_field);
+
                 valueLabels
                     .enter()
                     .append('text')
@@ -252,6 +251,7 @@
                     .duration(tickDuration)
                     .ease(d3.easeLinear)
                     .attr('y', d => y3(d.position) + 5 + ((y3(1) - y3(0)) / 2) + 1);
+
                 valueLabels
                     .transition()
                     .duration(tickDuration)
@@ -264,6 +264,7 @@
                             this.textContent = d3.format(',')(i(t));
                         };
                     });
+
                 valueLabels
                     .exit()
                     .transition()
@@ -274,15 +275,13 @@
                     .remove();
 
                 yearText.html(~~year); //~~ convert to int (remove decimals)      
-                // yearText
 
                 if (year == 1988 || year == 1991 || year == 1997 || year == 2001 || year == 2006 || year == 2011 || year == 2015 || year == 2020) yearText.style('fill', '#E81616');
-                // if(election_years.includes(year)) {yearText.style('fill', '#E81616')}
+
                 else {
                     yearText.style('fill', '#CCCCCC')
                 };
-                // if(year == 1989) yearText.style('fill', '#CCCCCC');
-                // if(year == 1991) yearText.style('fill', '#E81616');
+
                 if (year == 2020) year = 1987;
                 //Iterate the election between 1988 to 2020
                 year = d3.format('.1f')((+year) + 1);
